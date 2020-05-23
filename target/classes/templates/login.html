@@ -1,0 +1,105 @@
+<style>
+    body {
+    background-image: url('https://i.ibb.co/K07Nj0M/white-scratone.png');
+}
+
+
+label.smallText {
+	font-size: 20px;
+	font-family: "Georgia";
+}
+
+legend.bigText {
+	font-size: 40px;
+	font-family: "Georgia";
+}
+
+
+div.frame {
+
+	margin: auto; /* Выравниваем по центру */
+	position: relative;
+    padding-top: 10%;
+	width: 400px; /* Ширина элемента в пикселах */
+    text-align: center;
+}
+
+input {
+
+	width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+input.button {
+
+	font-size: 17px;
+	text-decoration: none; /* убирать подчёркивание у ссылок */
+	user-select: none; /* убирать выделение текста */
+	background: #04396C;
+ 	/* фон кнопки */
+  	padding: .7em 1.5em; /* отступ от текста */
+  	outline: none; /* убирать контур в Mozilla */
+  	color: #fff; /* цвет текста */
+}
+
+input.button:hover {
+
+	background: #26527C;
+} /* при наведении курсора мышки */
+
+
+input.button:active {
+	background:#679ED2;
+
+} /* при нажатии */
+
+input[type="checkbox"] {
+    height: 20px;
+}
+
+.to-center {
+text-align:center;
+}
+
+.error {
+color:red;
+}
+
+
+</style>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Login</title>
+</head>
+<body>
+<div class="frame">
+    <fieldset>
+        <legend class="bigText">Вход</legend>
+        <form method="POST" th:action="@{/login}" id="loginForm">
+            <label for="nickname" class="smallText">Логин: </label>
+            <input type="text" name="nickname" id="nickname" required="required"/><br/>
+            <label for="password" class="smallText">Пароль: </label>
+            <input type="password" name="password" id="password" required="required"/><br/>
+            <input type="submit" value="Login" class="button"/>
+            <label for="remember-me" class="smallText">Запомнить меня?</label>
+            <input type="checkbox" name="remember-me" id="remember-me"/>
+        </form>
+    </fieldset>
+</div>
+
+<div class="to-center">
+    <a href="/registration">Регистрация</a>
+</div>
+
+<div class="to-center error" th:if="${error} == 'UserNotExistsOrPasswordIncorrect'">
+    <h3>Неверный логин или пароль!</h3>
+</div>
+
+
+</body>
+</html>
