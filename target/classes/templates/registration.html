@@ -1,150 +1,214 @@
 <style>
-    body {
-	font-family: "Georgia";
-    background-image: url('https://i.ibb.co/K07Nj0M/white-scratone.png');
-    white-space: nowrap;
-    display: flex;
-    flex-direction: column;
-    }
 
-
-
-
-    fieldset {
-    	width: 30%;
-    }
-
-    input,select {
-    	margin-top: 20px;
-    }
-
-
-.error {
-	color:red;
+body {
+    color:#0d0d0d;
+    font-family: "TIMES";
+    background-color: #eff0f3;
 }
 
-
-input{
-   width:350px;
-   height: 30px;
+.back {
+ background-color: #eff0f3;
 }
 
-.translate-to-center {
-	display: flex;
-	justify-content: center;
+.offset {
+	padding-top: 10%;
 }
 
-.registration-title {
-	font-size: 50px;
-	text-align: center;
-}
-
-.header-small {
+.text {
 	font-size: 22px;
 }
 
-
-.button-position {
-	text-align: center;
-
+.bigText {
+	font-size: 45px;
+	color:#0d0d0d;
 }
-.button-size {
+
+.container {
+	display: flex;
+	flex-direction: column;
+	background-color:#fffffe;
+	align-items: center;
+	background-color: #eff0f3;
+}
+
+.item {
+display: flex;
+justify-content: center;
+}
+
+.frame {
+	width: 400px; /* Ширина элемента в пикселах */
+}
+
+.unselected {
+	user-select: none;
+}
+
+.error {
+	font-family: "VERDANA";
+}
+
+input, select:hover {
+	background-color: #ffb782;
+}
+
+option, input[type="date"] {
+font-size: 15px;
+}
+
+input,select {
+	border:none;
+	border-radius: 10px;
+	background-color: #cccccc;
+	width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+
+.darkenButton:hover {
+		background-color:#ff750f;
+}
+
+.button {
 	width: 250px;
-	height: 50px;
-}
-.button-font {
-	font-size: 30px;
-		text-decoration: none; /* убирать подчёркивание у ссылок */
+	border-radius: 10px;
+	font-size: 17px;
 	user-select: none; /* убирать выделение текста */
-	background: #04396C;
- 	/* фон кнопки */
-
+	background: #ff8e3c;
+ 	border: none;
   	outline: none; /* убирать контур в Mozilla */
-  	color: #fff; /* цвет текста */
-}
-
-.top {
-margin-top: 2%;
-}
-
-.ref {
-text-align:center;
+  	color: #0d0d0d; /* цвет текста */
 }
 
 </style>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Registration</title>
+    <title>Регистрация</title>
     <meta charset="UTF-8"/>
 </head>
+
 <body>
 
+<div class="container">
 
+    <fieldset class="frame">
 
+        <div class="item">
+            <legend class="unselected bigText">Регистрация</legend>
+        </div>
 
-<div class="translate-to-center header-small top">
-    <fieldset>
-        <div class="registration-title"><legend>Регистрация</legend></div>
         <form method="POST" th:action="@{/registration}" id="registerForm">
 
-            <label for="nickname">Логин: </label>
-            <input type="text" name="nickname" id="nickname" required="required"    autocomplete="off"/><br/>
+            <div>
+                <label class="unselected text">Логин </label>
+            </div>
 
-            <label for="lastname">Фамилия:</label>
-            <input type="text" name="lastname" id="lastname" required="required"    autocomplete="off"><br/>
+            <div>
+                <input type="text" name="nickname" required="required" autocomplete="off" maxlength="100"/>
+            </div>
 
-            <label for="firstname">Имя: </label>
-            <input type="text" name="firstname" id="firstname" required="required"    autocomplete="off"/><br/>
+            <div>
+                <label class="unselected text">Фамилия</label>
+            </div>
 
-            <label for="middlename">Отчество: </label>
-            <input type="text" name="middlename" id="middlename" required="required"    autocomplete="off"/><br/>
+            <div>
+                <input type="text" name="lastname" required="required" autocomplete="off" maxlength="100">
+            </div>
 
+            <div>
+                <label class="unselected text">Имя</label>
+            </div>
 
+            <div>
+                <input type="text" name="firstname" required="required" autocomplete="off" maxlength="100"/>
+            </div>
 
-            <label for="birthday">День рождения: </label>
-            <input type="date" name="birthday" id="birthday" required="required"><br/>
+            <div>
+                <label class="unselected text">Отчество</label>
+            </div>
 
-            <label for="gender">Пол:</label>
-            <select name="gender" size="1" id="gender">
-                <option value="male">Мужской</option>
-                <option selected="selected" value="female">Женский</option>
-            </select><br/>
+            <div>
+                <input type="text" name="middlename" required="required" autocomplete="off" maxlength="100"/>
+            </div>
 
+            <div>
+                <label class="unselected text">День рождения(Г/М/Д)</label>
+            </div>
 
-            <label for="password">Password: </label>
-            <input type="password" name="password" id="password" required="required"/><br/>
+            <div>
+                <input type="date" name="birthday" required="required">
+            </div>
 
-            <label for="confirm">Confirm password: </label>
-            <input type="password" name="confirm" id="confirm" required="required"/><br/>
+            <div>
+                <label class="unselected text">Пол</label>
+            </div>
 
-            <label for="role">Роль:</label>
-            <select name="role" size="1" id="role">
-                <option value="ROLE_ADMIN">Администратор</option>
-                <option selected="selected" value="ROLE_USER">Продавец</option>
-            </select><br/>
+            <div>
+                <select name="gender" size="1">
+                    <option value="male" class="unselected">Мужской</option>
+                    <option selected="selected" value="female" class="unselected">Женский</option>
+                </select>
+            </div>
 
-            <div class="button-position">
-                <input type="submit" value="Register" class="button-size button-font"/>
+            <div>
+                <label class="unselected text">Пароль</label>
+            </div>
+
+            <div>
+                <input type="password" name="password" required="required" maxlength="100"/>
+            </div>
+
+            <div>
+                <label class="unselected text">Подтверждение пароля</label>
+            </div>
+
+            <div>
+                <input type="password" name="confirm" required="required" maxlength="100"/>
+            </div>
+
+            <div>
+                <label class="unselected text">Роль</label>
+            </div>
+
+            <div>
+                <select name="role" size="1">
+                    <option class="unselected" value="ROLE_ADMIN">Администратор</option>
+                    <option class="unselected" selected="selected" value="ROLE_USER">Продавец</option>
+                </select>
+            </div>
+
+            <div class="item">
+                <input class="button darkenButton" type="submit" value="Зарегистрироваться"/>
             </div>
         </form>
     </fieldset>
+
 </div>
 
-<div class="ref">
-    <a href="/login">Вход</a>
+<div class="container">
+    <div class="item">
+        <form th:action="@{/login}" method="get">
+            <input class="button darkenButton" type="submit" value="Вход"/>
+        </form>
+    </div>
 </div>
 
-
-<div class="translate-to-center error" th:if="${error} == 'NicknameIsAlreadyUsed'">
-    <h3>Этот логин уже используется!</h3>
+<div class="container">
+    <div class="item" th:if="${error} == 'NicknameIsAlreadyUsed'">
+        <h3 class="unselected error">Этот логин уже используется!</h3>
+    </div>
 </div>
 
-<div class="translate-to-center error" th:if="${error} == 'PasswordsDontMatch'">
-    <h3>Пароли не совпадают!</h3>
+<div class="container">
+    <div class="item" th:if="${error} == 'PasswordsDontMatch'">
+        <h3 class="unselected error">Пароли не совпадают!</h3>
+    </div>
 </div>
-
 
 </body>
 </html>

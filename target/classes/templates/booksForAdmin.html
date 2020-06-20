@@ -1,0 +1,259 @@
+<style>
+body {
+    color:#0d0d0d;
+    font-family: "TIMES";
+    background-color: #eff0f3;
+}
+
+.back {
+ background-color: #eff0f3;
+}
+
+.offset {
+	padding-top: 10%;
+}
+
+.text {
+	font-size: 22px;
+}
+
+.bigText {
+	font-size: 45px;
+	color:#0d0d0d;
+}
+
+.container_1 {
+	display: flex;
+	background-color: #eff0f3;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+.container_2 {
+	display: flex;
+	background-color: #eff0f3;
+	justify-content: center;
+	align-items: baseline;
+	flex-wrap: wrap;
+}
+
+.item {
+display: flex;
+}
+
+.frame {
+	width: 400px; /* Ширина элемента в пикселах */
+}
+
+
+.unselected {
+	user-select: none;
+}
+
+.error {
+	font-family: "VERDANA";
+}
+
+.space {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+input, select, input[type="text"]:hover {
+	background-color: #ffb782;
+}
+
+select, input {
+	border:none;
+	border-radius: 10px;
+	background-color: #cccccc;
+	width: 250px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.input-book{
+	border:none;
+	border-radius: 10px;
+	background-color: #cccccc;
+	width: 100px;
+	height: 50px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+select, option {
+font-size: 15px;
+}
+
+.darkenButton:hover {
+		background-color:#ff750f;
+}
+
+.button {
+	padding: 12px 20px;
+	box-sizing: border-box;
+	width: 250px;
+	height: 50px;
+	border-radius: 10px;
+	font-size: 17px;
+	user-select: none; /* убирать выделение текста */
+	background: #ff8e3c;
+ 	border: none;
+  	outline: none; /* убирать контур в Mozilla */
+  	color: #0d0d0d; /* цвет текста */
+}
+
+.danger-button {
+	background-color: #d9376e;
+}
+
+.danger-button:hover {
+	background-color: #a4204e;
+}
+
+.space-after-word {
+	padding-right: 5px;
+}
+
+fieldset
+{
+  background-color:#CCC;
+  max-width:500px;
+  padding:16px;
+}
+</style>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Все книги</title>
+</head>
+<body>
+
+<div class="container_1">
+
+    <div class="item">
+        <label class="text space-after-word">Администратор:</label>
+        <label class="text space-after-word" th:text="${user.lastname}">lastname</label>
+        <label class="text space-after-word" th:text="${user.firstname}">firstname</label>
+        <label class="text space-after-word" th:text="${user.middlename}">middlename</label>
+    </div>
+
+    <div class="item">
+        <form method="GET" th:action="@{/}">
+            <input class="button darkenButton" type="submit" value="На главную">
+        </form>
+        <form class="space" method="POST" th:action="@{/logout}">
+            <input class="button danger-button" type="submit" name="logout" value="Выход" onclick="return confirm('Выйти из акканута?')">
+        </form>
+    </div>
+</div>
+
+
+<form method="POST" th:action="@{/booksForAdmin}">
+
+    <div class="container_2">
+
+
+        <select class="select-menu" name="sort_selector">
+            <option value="AuthorAZ">Автор (А-Я)</option>
+            <option value="AuthorZA">Автор (Я-А)</option>
+            <option value="YearLM">Год написания (от меньшего к большему)</option>
+            <option value="YearML">Год написания (от большего к меньшему)</option>
+            <option value="CountLM">Количество (от меньшего к большему)</option>
+            <option value="CountML">Количество (от большего к меньшему)</option>
+        </select>
+    </div>
+    <div class="container_2">
+
+        <select class="select-menu" name="theme_selector">
+            <div th:each="theme : ${themes}">
+                <option th:text="${theme.themeTitle}" th:value="${theme.themeTitle}">title</option>
+            </div>
+        </select>
+
+    </div>
+
+    <div class="container_2">
+
+        <input class="button darkenButton" type="submit" value="Посмотреть книги">
+
+    </div>
+</form>
+
+<div class="container_2">
+    <div class="item" th:each="book : ${books}">
+        <fieldset class="container_1 frame">
+            <div class="item-center">
+                <form method="GET" th:action="@{/booksForAdmin/{id}(id=${book.id})}">
+                    <input class="button darkenButton" type="submit" value="Изменить">
+                </form>
+            </div>
+
+            <div class="item">
+                <label class="text space-after-word">Название: </label>
+                <div class="text" th:text="${book.title}">title</div>
+            </div>
+
+
+            <div class="item">
+                <label class="text space-after-word">Авторы:</label>
+            </div>
+            <div class="item" th:each="author : ${book.authors}">
+                <label class="text">~</label>
+                <div class="text space-after-word" th:text="${author.fullName}">fullName</div>
+            </div>
+
+
+            <div class="item">
+                <label class="text space-after-word">Год написания книги(Г/М/Д):</label>
+                <div class="text" th:text="${book.year}">year</div>
+            </div>
+
+
+            <div class="item">
+                <label class="text space-after-word">Тематика:</label>
+                <div class="text" th:each="theme : ${book.themes}">
+                    <div class="space-after-word" th:text="${theme.themeTitle}">themeTitle</div>
+                </div>
+            </div>
+
+
+            <div class="item">
+                <label class="text space-after-word">Тираж:</label>
+                <div class="text" th:text="${book.edition}">edition</div>
+            </div>
+
+
+            <div class="item">
+                <label class="text space-after-word">Цена:</label>
+                <div class="text" th:text="${book.price}">price</div>
+            </div>
+
+            <div class="item">
+                <label class="text space-after-word">Осталось:</label>
+                <div class="text space-after-word" th:text="${book.count}">count</div>
+                <label class="text">шт.</label>
+            </div>
+
+            <div class="item">
+                <label class="text space-after-word">Описание:</label>
+                <div class="text space-after-word" th:text="${book.description}">description</div>
+            </div>
+
+            <form class="item space" method="POST" th:action="@{/actionsWithBooks/deleteBook/{id} (id=${book.id})}"
+                  onclick="return confirm('Удалить книгу?')">
+                <input class="button danger-button" type="submit" value="Удалить книгу">
+            </form>
+
+        </fieldset>
+    </div>
+</div>
+
+</body>
+</html>

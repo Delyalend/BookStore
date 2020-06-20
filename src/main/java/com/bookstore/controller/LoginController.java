@@ -26,19 +26,18 @@ public class LoginController {
 
         User userFromDb = userDao.findUserByNickname(loginForm.getNickname());
 
-        if(userFromDb == null) {
-            model.addAttribute("error","UserNotExistsOrPasswordIncorrect");
+        if (userFromDb == null) {
+            model.addAttribute("error", "UserNotExistsOrPasswordIncorrect");
             return "login";
         }
 
         User user = loginForm.toUser(new BCryptPasswordEncoder());
 
-        if(userFromDb.getPassword().equals(user.getPassword())) {
-
+        if (userFromDb.getPassword().equals(user.getPassword())) {
             return "redirect:/";
         }
 
-        model.addAttribute("error","UserNotExistsOrPasswordIncorrect");
+        model.addAttribute("error", "UserNotExistsOrPasswordIncorrect");
 
         return "login";
     }

@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+
 import java.sql.Date;
 
 @Data
@@ -13,17 +15,19 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User{
+
+
     @Autowired
     private UserDao userDao;
 
-    private Long id;
+    private Long userId;
     private String nickname;
     private String password;
     private Date birthday;
     private boolean enabled;
-    private String firstName;
-    private String middleName;
-    private String lastName;
+    private String firstname;
+    private String middlename;
+    private String lastname;
     private String gender;
     private Role role;
 
@@ -35,5 +39,6 @@ public class User{
     public boolean isAccountNonLocked() {
         return enabled;
     }
+
 
 }

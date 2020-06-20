@@ -1,6 +1,7 @@
 package com.bookstore.controller;
 
 import com.bookstore.dao.UserDao;
+import com.bookstore.security.AccountValidatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -12,17 +13,20 @@ public class HomeController {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private AccountValidatorService accountValidatorService;
+
     @GetMapping("/")
     public String getHomePage(Authentication authentication) {
 
-        if(authentication!=null) {
-            if(userDao.findRoleByNickname(authentication.getName()).getTitle().equals("ROLE_USER")) {
-                return "redirect:mainUserPage";
-            }
-            else if(userDao.findRoleByNickname(authentication.getName()).getTitle().equals("ROLE_ADMIN")){
-                return "redirect:mainAdminPage";
+
+        if (authentication != null) {
+            if (userDao.findRoleByNickname(authentication.getName()).getTitle().equals("ROLE_USER")) {
+                return "redirect:/mainUserPage";
+            } else if (userDao.findRoleByNickname(authentication.getName()).getTitle().equals("ROLE_ADMIN")) {
+                return "redirect:/mainAdminPage";
             }
         }
-        return "/login";
+        return "redirect:/login";
     }
 }

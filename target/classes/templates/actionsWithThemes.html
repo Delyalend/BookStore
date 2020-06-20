@@ -1,0 +1,206 @@
+<style>
+	body {
+    color:#0d0d0d;
+    font-family: "TIMES";
+    background-color: #eff0f3;
+}
+
+.back {
+ background-color: #eff0f3;
+}
+
+.text {
+	font-size: 22px;
+}
+
+.bigText {
+	font-size: 45px;
+	color:#0d0d0d;
+}
+
+.container_1 {
+	display: flex;
+	background-color: #eff0f3;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+.container_1_center {
+		display: flex;
+	background-color: #eff0f3;
+	justify-content: center;
+	align-items: baseline;
+}
+
+.container_2 {
+	display: flex;
+	background-color: #eff0f3;
+	justify-content: center;
+	align-items: baseline;
+	flex-wrap: wrap;
+}
+
+.item {
+display: flex;
+}
+
+.item-center {
+	display: flex;
+	justify-content: center;
+}
+
+.darkenButton:hover {
+		background-color:#ff750f;
+}
+
+.button {
+	padding: 12px 20px;
+	box-sizing: border-box;
+	width: 250px;
+	height: 50px;
+	border-radius: 10px;
+	font-size: 17px;
+	user-select: none; /* убирать выделение текста */
+	background: #ff8e3c;
+ 	border: none;
+  	outline: none; /* убирать контур в Mozilla */
+  	color: #0d0d0d; /* цвет текста */
+}
+
+.frame {
+	width: 400px; /* Ширина элемента в пикселах */
+}
+
+.space-after-word {
+	padding-right: 5px;
+}
+
+.space {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.offset {
+	padding-top: 10%;
+}
+
+fieldset
+{
+  background-color:#CCC;
+  max-width:500px;
+  padding:16px;
+}
+
+.danger-button {
+	background-color: #d9376e;
+}
+
+.danger-button:hover {
+	background-color: #a4204e;
+}
+
+.highlighting {
+text-decoration: underline;
+font-family: ARIAL;
+}
+
+input, select {
+	border:none;
+	border-radius: 10px;
+	background-color: #cccccc;
+	width: 250px;
+	height: 50px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.input-in-frame {
+	border:none;
+	border-radius: 10px;
+	background-color: #eff0f3;
+	width: 250px;
+	height: 50px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+select:hover {
+	background-color: #ffb782;
+}
+
+input[type='text']:hover {
+	background-color: #ffb782;
+}
+
+select, option {
+font-size: 15px;
+}
+
+</style>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Действия с тематиками</title>
+</head>
+<body>
+<div class="container_1">
+    <div class="item">
+        <div class="text space">Администратор:</div>
+        <div class="text space" th:text="${user.lastname}">lastname</div>
+        <div class="text space" th:text="${user.firstname}">firstname</div>
+        <div class="text space" th:text="${user.middlename}">middlename</div>
+    </div>
+
+    <div class="item">
+        <form class="space" method="GET" th:action="@{/}">
+            <input class="button darkenButton" type="submit" value="На главную">
+        </form>
+        <form class="space" method="POST" th:action="@{/logout}">
+            <input class="button danger-button" type="submit" value="Выход"
+                   onclick="return confirm('Выйти из акканута?')">
+        </form>
+    </div>
+</div>
+<div class="container_1_center">
+    <form class="item" method="POST" th:action="@{/actionsWithThemes/addTheme}">
+        <div class="space"><input placeholder="Название тематики" type="text" name="text" required="required"
+                                  autocomplete="off" maxlength="100"></div>
+        <div class="space"><input class="button darkenButton" type="submit" value="Добавить тематику"></div>
+    </form>
+</div>
+<div class="container_1_center">
+    <form class="item-center" method="GET" th:action="@{/actionsWithThemes/all}">
+        <input class="button darkenButton" type="submit" value="Показать все тематики">
+    </form>
+</div>
+<div class="container_1_center" th:if="${error} == 'true'">
+    <label class="text">Тематики не найдены</label>
+</div>
+
+<div class="container_2">
+    <div class="container_1_center" th:each="theme : ${themes}">
+        <fieldset>
+            <label class="item-center text" th:text="${theme.themeTitle}">themeTitle</label>
+
+            <form class="item-center" th:action="@{/actionsWithThemes/changeInformation/{id}(id=${theme.themeId})}"
+                  method="post">
+                <div class="space"><input class="input-in-frame" placeholder="Название тематики" type="text" name="text"
+                                          required="required" autocomplete="off"
+                                          maxlength="255"></div>
+                <div class="space"><input class="button darkenButton" type="submit" value="Изменить данные"></div>
+            </form>
+
+            <form class="item-center" th:action="@{/actionsWithThemes/delete/{id}(id=${theme.themeId})}" method="post">
+                <input class="button danger-button" type="submit" value="Удалить тематику?"
+                       onclick="return confirm('Вы уверены?')">
+            </form>
+        </fieldset>
+    </div>
+</div>
+
+</body>
+</html>

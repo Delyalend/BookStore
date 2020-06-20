@@ -1,74 +1,87 @@
 <style>
-    body {
-    background-image: url('https://i.ibb.co/K07Nj0M/white-scratone.png');
+body {
+    color:#0d0d0d;
+    font-family: "TIMES";
+    background-color: #eff0f3;
 }
 
-
-label.smallText {
-	font-size: 20px;
-	font-family: "Georgia";
+.back {
+ background-color: #eff0f3;
 }
 
-legend.bigText {
-	font-size: 40px;
-	font-family: "Georgia";
+.offset {
+	padding-top: 10%;
 }
 
+.text {
+	font-size: 22px;
+}
 
-div.frame {
+.bigText {
+	font-size: 45px;
+	color:#0d0d0d;
+}
 
-	margin: auto; /* Выравниваем по центру */
-	position: relative;
-    padding-top: 10%;
+.container {
+	display: flex;
+	flex-direction: column;
+	background-color:#fffffe;
+	align-items: center;
+	background-color: #eff0f3;
+}
+
+.item {
+display: flex;
+justify-content: center;
+}
+
+.frame {
 	width: 400px; /* Ширина элемента в пикселах */
-    text-align: center;
+}
+
+
+.unselected {
+	user-select: none;
+}
+
+.error {
+	font-family: "VERDANA";
+}
+
+input:hover {
+	background-color: #ffb782;
 }
 
 input {
-
+	border:none;
+	border-radius: 10px;
+	background-color: #cccccc;
 	width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;
 }
 
-input.button {
-
-	font-size: 17px;
-	text-decoration: none; /* убирать подчёркивание у ссылок */
-	user-select: none; /* убирать выделение текста */
-	background: #04396C;
- 	/* фон кнопки */
-  	padding: .7em 1.5em; /* отступ от текста */
-  	outline: none; /* убирать контур в Mozilla */
-  	color: #fff; /* цвет текста */
+.darkenButton:hover {
+		background-color:#ff750f;
 }
-
-input.button:hover {
-
-	background: #26527C;
-} /* при наведении курсора мышки */
-
-
-input.button:active {
-	background:#679ED2;
-
-} /* при нажатии */
 
 input[type="checkbox"] {
     height: 20px;
 }
 
-.to-center {
-text-align:center;
+.button {
+	width: 250px;
+	border-radius: 10px;
+	font-size: 17px;
+	user-select: none; /* убирать выделение текста */
+	background: #ff8e3c;
+ 	border: none;
+  	outline: none; /* убирать контур в Mozilla */
+  	color: #0d0d0d; /* цвет текста */
 }
-
-.error {
-color:red;
-}
-
-
 </style>
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
@@ -77,27 +90,58 @@ color:red;
     <title>Login</title>
 </head>
 <body>
-<div class="frame">
-    <fieldset>
-        <legend class="bigText">Вход</legend>
+
+<div class="container offset">
+    <fieldset class="frame">
+
+        <div class="item">
+            <legend class="bigText unselected">Вход</legend>
+        </div>
+
         <form method="POST" th:action="@{/login}" id="loginForm">
-            <label for="nickname" class="smallText">Логин: </label>
-            <input type="text" name="nickname" id="nickname" required="required"/><br/>
-            <label for="password" class="smallText">Пароль: </label>
-            <input type="password" name="password" id="password" required="required"/><br/>
-            <input type="submit" value="Login" class="button"/>
-            <label for="remember-me" class="smallText">Запомнить меня?</label>
-            <input type="checkbox" name="remember-me" id="remember-me"/>
+            <div class="item">
+                <label class="text unselected">Логин </label>
+            </div>
+
+            <div class="item">
+                <input type="text" name="nickname" required="required" maxlength="100"/>
+            </div>
+
+            <div class="item">
+                <label class="text unselected">Пароль </label>
+            </div>
+
+            <div class="item">
+                <input type="password" name="password" required="required" maxlength="100"/>
+            </div>
+
+            <div class="item">
+                <input class="button darkenButton" type="submit" value="Войти"/>
+            </div>
+
+            <div class="item">
+                <label class="text unselected">Запомнить меня</label>
+            </div>
+
+            <div class="item">
+                <input type="checkbox" name="remember-me"/>
+            </div>
         </form>
     </fieldset>
 </div>
 
-<div class="to-center">
-    <a href="/registration">Регистрация</a>
+<div class="container">
+    <div class="item">
+        <form th:action="@{/registration}" method="get">
+            <input class="button darkenButton" type="submit" value="Регистрация"/>
+        </form>
+    </div>
 </div>
 
-<div class="to-center error" th:if="${error} == 'UserNotExistsOrPasswordIncorrect'">
-    <h3>Неверный логин или пароль!</h3>
+<div class="container">
+    <div class="item" th:if="${error} == 'UserNotExistsOrPasswordIncorrect'">
+        <h3 class="unselected error">Неверный логин или пароль!</h3>
+    </div>
 </div>
 
 

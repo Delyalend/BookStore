@@ -1,0 +1,198 @@
+<style>
+	body {
+    color:#0d0d0d;
+    font-family: "TIMES";
+    background-color: #eff0f3;
+}
+
+.back {
+ background-color: #eff0f3;
+}
+
+.text {
+	font-size: 22px;
+}
+
+.bigText {
+	font-size: 45px;
+	color:#0d0d0d;
+}
+
+.container_1 {
+	display: flex;
+	background-color: #eff0f3;
+	justify-content: space-between;
+	align-items: baseline;
+}
+
+.container_1_center {
+		display: flex;
+	background-color: #eff0f3;
+	justify-content: center;
+	align-items: baseline;
+}
+
+.container_2 {
+		display: flex;
+	background-color: #eff0f3;
+	justify-content: center;
+	align-items: baseline;
+	flex-wrap: wrap;
+}
+
+.item {
+display: flex;
+}
+
+.item-center {
+	display: flex;
+	justify-content: center;
+}
+
+.darkenButton:hover {
+		background-color:#ff750f;
+}
+
+.button {
+	padding: 12px 20px;
+	box-sizing: border-box;
+	width: 250px;
+	height: 50px;
+	border-radius: 10px;
+	font-size: 17px;
+	user-select: none; /* убирать выделение текста */
+	background: #ff8e3c;
+ 	border: none;
+  	outline: none; /* убирать контур в Mozilla */
+  	color: #0d0d0d; /* цвет текста */
+}
+
+.frame {
+	width: 400px; /* Ширина элемента в пикселах */
+}
+
+.space-after-word {
+	padding-right: 5px;
+}
+
+.space {
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.offset {
+	padding-top: 10%;
+}
+
+fieldset
+{
+  background-color:#CCC;
+  max-width:500px;
+  padding:16px;
+}
+
+.danger-button {
+	background-color: #d9376e;
+}
+
+.danger-button:hover {
+	background-color: #a4204e;
+}
+
+.highlighting {
+text-decoration: underline;
+font-family: ARIAL;
+}
+
+input, select {
+	border:none;
+	border-radius: 10px;
+	background-color: #cccccc;
+	width: 250px;
+	height: 50px;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+select:hover {
+	background-color: #ffb782;
+}
+
+input[type='text']:hover {
+	background-color: #ffb782;
+}
+
+select, option {
+font-size: 15px;
+}
+
+</style>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Отчёт</title>
+</head>
+<body>
+<div class="container_1">
+    <div class="item">
+        <div class="text space">Администратор:</div>
+        <div class="text space" th:text="${user.lastname}">lastname</div>
+        <div class="text space" th:text="${user.firstname}">firstname</div>
+        <div class="text space" th:text="${user.middlename}">middlename</div>
+    </div>
+
+    <div class="item">
+        <form class="space" method="GET" th:action="@{/}">
+            <input class="button darkenButton" type="submit" value="На главную">
+        </form>
+        <form class="space" method="POST" th:action="@{/logout}">
+            <input class="button danger-button" type="submit" value="Выход"
+                   onclick="return confirm('Выйти из акканута?')">
+        </form>
+    </div>
+</div>
+<div th:switch="${error}">
+    <label class="container_1_center text" th:case="'reportsNotFound'">Отчеты не найдены</label>
+    <div class="container_2">
+        <div th:each="report : ${reports}">
+            <fieldset class="frame">
+
+                <div class="item">
+                    <label class="space-after-word text">Продавец:</label>
+                    <div class="text" th:text="${report.sellerName}">sellerName</div>
+                </div>
+
+                <div class="item">
+                    <label class="space-after-word text">Продано книг:</label>
+                    <div class="text" th:text="${report.countSoldBooks}">countSoldBooks</div>
+                </div>
+
+                <div class="item">
+                    <label class="space-after-word text">Тематики книг:</label>
+                    <div class="text" th:each="theme : ${report.themes}">
+                        <div class="text space-after-word" th:text="${theme.themeTitle}">themeTitle</div>
+                    </div>
+                </div>
+
+                <div class="item">
+                    <label class="space-after-word text">Выручка:</label>
+                    <div class="text" th:text="${report.profit}">profit</div>
+                </div>
+
+                <div class="item">
+                    <label class="space-after-word text">Дата продажи(Г/М/Д):</label>
+                    <div class="text" th:text="${report.dateSale}">dateSale</div>
+                </div>
+            </fieldset>
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
